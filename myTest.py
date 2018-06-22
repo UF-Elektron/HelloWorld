@@ -49,7 +49,16 @@ elif programSelection == 2:
     print('The two objects newVar (=%i)' %newVar, 'and sameVar (=%i)'  %sameVar, 'have both stored the same value. And because this value is in the range between -5 and +255 it is stored at the same address.')
     print('This can be seen by checking their IDs: \nnewVar-ID = %i' %id(newVar), '\nsameVar-ID = %i' %id(sameVar))
     print('This concept is known as Interning. It also works for strings wich have less than 20 characters and contain no whitespaces!')
+    print('When I create a new object, lets say pointToVar, and set pointToVar = newVar, then they share the same address. But what happens now if i change the value of one of them? Are both of them going to change?')
+    pointToVar = newVar
+    print('The Value of pointToVar is %i' %pointToVar, 'and its ID is %i' %id(pointToVar))
+    pointToVar = 20
+    print('Now I changed pointToVar to %i' %pointToVar, 'what is the value of newVar now? newVar = %i' %newVar)
+    if pointToVar != newVar:
+        print('Ok, so they are not equal.. this means their ID changed! ID of pointToVar %i' %id(pointToVar), 'and ID of newVar %i' %id(newVar))
+    else:
+        print('Both are equal, so they should still have the same ID. ID of pointToVar %i' %id(pointToVar), 'and ID of newVar %i' %id(newVar))
 else:
-    print('No valueable number was printed.. :-(')
+    print('No valid number was printed.. :-(')
     
 print('\n----End of program----')
