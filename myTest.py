@@ -51,12 +51,20 @@ def objectExperiments():
     else:
         print('Both are equal, so they should still have the same ID. ID of pointToVar %i' %id(pointToVar), 'and ID of newVar %i' %id(newVar))
 
-
+def randomNumber():
+    import random # Import of the random (library?) is needed for random.XYZ to work
+    print('Calculate a random number between lower bound and upper bound')
+    lowerBound = int(input('lower bound '))
+    upperBound = int(input('upper bound '))
+    print('%i' %random.randrange(lowerBound, upperBound))
+    
+    
+#*****************************************************************************************************************************************************************
 # Start of the program:
 running = 1
 
 while running:
-    print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \n[3] Print The Zen of Python')
+    print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \n[3] Print The Zen of Python \n[4] Get random number')
     programSelection = int(input('Type a number to run a program: '))
 
     if programSelection == 0:   # Exit program selection
@@ -74,7 +82,10 @@ while running:
         
     elif programSelection == 3: # Start zen routine (import this)
         zenRoutine()
-        
+       
+    elif programSelection == 4: # Get random number
+        randomNumber() 
+    
     else:
         print('No valid number was printed.. :-( \n')
     
