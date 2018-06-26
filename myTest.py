@@ -4,21 +4,14 @@
 #         List of learning links: https://wiki.python.org/moin/BeginnersGuide/Programmers
 #         Learn python step-by-step: http://www.techbeamers.com/python-tutorial-step-by-step/
 
-print('What do you want to do? \n[0] Print The Zen of Python \n[1] Start Interest Calculator \n[2] Object experiments')
-programSelection = int(input('Type a number to run a program: '))
-
-if programSelection == 0:
+def zenRoutine():
     # Type "import this" to print the zen of python
     print('----------------------------------------------------------------')
-    import this
+    import this # This line prints "the zen of python" only the first time it is called (How can I print it again?)
     this    # Here is the call of 'this' not needed. I wrote it to surpress the warning that 'this' was not used
     print('----------------------------------------------------------------')
-elif programSelection == 1:
-    # Start interest calculator (with input and output)
-    print('Interest Calculator:')
-    amount = float(input('Principal amount ?'))
-    roi = float(input('Rate of Interest ?'))
-    years = int(input('Duration (no. of years) ?'))
+    
+def interestRoutine(amount, roi, years):
     total = (amount * pow(1 + (roi/100), years))
     interest = total - amount
     print('Data type of interest value is', type(interest))
@@ -39,9 +32,8 @@ elif programSelection == 1:
     # Show that the id of an object can change during runtime
     print('Also interesting is that when a new value is assigned to an object, then its ID changes (The ID is its address!)')
     print('For example, the old ID of year was: %i' %tmpID, 'and the new one is ', id(years))
-    
 
-elif programSelection == 2:
+def objectExperiments():
     # Current chapter: http://www.techbeamers.com/understand-python-statement-indentation/
     print('Test different features of python objects')
     newVar = 255
@@ -58,7 +50,33 @@ elif programSelection == 2:
         print('Ok, so they are not equal.. this means their ID changed! ID of pointToVar %i' %id(pointToVar), 'and ID of newVar %i' %id(newVar))
     else:
         print('Both are equal, so they should still have the same ID. ID of pointToVar %i' %id(pointToVar), 'and ID of newVar %i' %id(newVar))
-else:
-    print('No valid number was printed.. :-(')
+
+
+# Start of the program:
+running = 1
+
+while running:
+    print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \n[3] Print The Zen of Python')
+    programSelection = int(input('Type a number to run a program: '))
+
+    if programSelection == 0:   # Exit program selection
+        running = 0
+        
+    elif programSelection == 1: # Start interest calculator (with input and output)
+        print('Interest Calculator:')
+        amount = float(input('Principal amount ?'))
+        roi = float(input('Rate of Interest ?'))
+        years = int(input('Duration (no. of years) ?'))
+        interestRoutine(amount, roi, years)
+    
+    elif programSelection == 2: # Start object experiments
+        objectExperiments()
+        
+    elif programSelection == 3: # Start zen routine (import this)
+        zenRoutine()
+        
+    else:
+        print('No valid number was printed.. :-( \n')
     
 print('\n----End of program----')
+
