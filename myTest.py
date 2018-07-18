@@ -3,6 +3,8 @@
 # Python learning links:
 #         List of learning links: https://wiki.python.org/moin/BeginnersGuide/Programmers
 #         Learn python step-by-step: http://www.techbeamers.com/python-tutorial-step-by-step/
+from cmath import sqrt, cos
+from math import acos
 
 def zenRoutine():
     # Type "import this" to print the zen of python
@@ -57,7 +59,16 @@ def randomNumber():
     lowerBound = int(input('lower bound '))
     upperBound = int(input('upper bound '))
     print('%i' %random.randrange(lowerBound, upperBound))
-    
+   
+def kartesToPolar():
+    print('It''s easy to work with complex numbers in Python, because there is a type that suports complex numbers!')
+    complexVal = complex(input('Type real value '))
+    complexVal = complexVal + complex(input('Type complex value (Format: nj)'))
+    print('Real value: %i' %complexVal.real, ' imaginary value: %i' %complexVal.imag)
+    betrag = sqrt(pow(complexVal.real, 2) + pow(complexVal.imag, 2))
+    betrag = betrag.real
+    winkel = acos(complexVal.real / betrag)
+    print('Polar form: z = %i' %betrag, ' <%f' %winkel.real)
     
 #*****************************************************************************************************************************************************************
 # Start of the program:
@@ -85,7 +96,10 @@ while running:
        
     elif programSelection == 4: # Get random number
         randomNumber() 
-    
+        
+    elif programSelection == 5: # Convert a complex value from cartesian to polar form
+        kartesToPolar()
+        
     else:
         print('No valid number was printed.. :-( \n')
     
