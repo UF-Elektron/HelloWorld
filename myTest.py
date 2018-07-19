@@ -70,12 +70,21 @@ def kartesToPolar():
     winkel = acos(complexVal.real / betrag)
     print('Polar form: z = %i' %betrag, ' <%f' %winkel.real)
     
+def listExperiments():
+    numberList = [1, 2, 3]   
+    stringList = ["alpha", "beta", "gamma"]
+    combinedList = numberList + stringList  # Lists can be filled with different data types
+    print('The list ', combinedList, 'has %i' %len(combinedList), 'entries.')
+    firstLetter = [iterator[0] for iterator in stringList] # This does not work for lists containing numbers!
+    print('Print only the first letter of every entry in stringList ', firstLetter)
+    
 #*****************************************************************************************************************************************************************
 # Start of the program:
 running = 1
 
 while running:
-    print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \n[3] Print The Zen of Python \n[4] Get random number')
+    print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \
+             \n[3] Print The Zen of Python \n[4] Get random number \n[5] Complex Values \n[6] Start list experiments')
     programSelection = int(input('Type a number to run a program: '))
 
     if programSelection == 0:   # Exit program selection
@@ -99,6 +108,9 @@ while running:
         
     elif programSelection == 5: # Convert a complex value from cartesian to polar form
         kartesToPolar()
+        
+    elif programSelection == 6: # Start list experiments
+        listExperiments()
         
     else:
         print('No valid number was printed.. :-( \n')
