@@ -1,11 +1,19 @@
 # DME, created 21.06.2018
 # Brief: This is my very first python program! :D
 # Python learning links:
-#         List of learning links: https://wiki.python.org/moin/BeginnersGuide/Programmers
-#         Learn python step-by-step: http://www.techbeamers.com/python-tutorial-step-by-step/
-from cmath import sqrt, cos
-from math import acos
+#        List of learning links: https://wiki.python.org/moin/BeginnersGuide/Programmers
+#        New tutorial I work with: https://docs.python.org/3/tutorial/ 
 
+#****************************************************************************************************************
+# Imports
+#****************************************************************************************************************
+# The following imports were automaticly added when I needed these functions
+from cmath import sqrt     # for calculation in kartesToPolar()
+from math import acos      # for calculation in kartesToPolar()
+
+#****************************************************************************************************************
+# My Functions
+#****************************************************************************************************************
 def zenRoutine():
     # Type "import this" to print the zen of python
     print('----------------------------------------------------------------')
@@ -36,7 +44,6 @@ def interestRoutine(amount, roi, years):
     print('For example, the old ID of year was: %i' %tmpID, 'and the new one is ', id(years))
 
 def objectExperiments():
-    # Current chapter: http://www.techbeamers.com/understand-python-statement-indentation/
     print('Test different features of python objects')
     newVar = 255
     sameVar = 255
@@ -56,9 +63,12 @@ def objectExperiments():
 def randomNumber():
     import random # Import of the random (library?) is needed for random.XYZ to work
     print('Calculate a random number between lower bound and upper bound')
-    lowerBound = int(input('lower bound '))
-    upperBound = int(input('upper bound '))
-    print('%i' %random.randrange(lowerBound, upperBound))
+    try:
+        lowerBound = int(input('lower bound '))
+        upperBound = int(input('upper bound '))
+        print(random.randrange(lowerBound, upperBound))
+    except Exception as ex:
+        print("Exception ocurred: ", ex)
    
 def kartesToPolar():
     print('It''s easy to work with complex numbers in Python, because there is a type that suports complex numbers!')
@@ -78,8 +88,10 @@ def listExperiments():
     firstLetter = [iterator[0] for iterator in stringList] # This does not work for lists containing numbers!
     print('Print only the first letter of every entry in stringList ', firstLetter)
     
-#*****************************************************************************************************************************************************************
+    
+#****************************************************************************************************************
 # Start of the program:
+#****************************************************************************************************************
 running = 1
 
 while running:
