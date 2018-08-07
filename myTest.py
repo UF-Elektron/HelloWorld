@@ -87,7 +87,18 @@ def listExperiments():
     print('The list ', combinedList, 'has %i' %len(combinedList), 'entries.')
     firstLetter = [iterator[0] for iterator in stringList] # This does not work for lists containing numbers!
     print('Print only the first letter of every entry in stringList ', firstLetter)
-    
+ 
+def testCounter():
+    timerTicks = 9
+    testCnt = 21
+
+    while testCnt > 0:
+        timerTicks += 1
+        testCnt -= 1
+        print(timerTicks)
+        if timerTicks == 10:
+            timerTicks = 0
+            print('10ms Event called')
     
 #****************************************************************************************************************
 # Start of the program:
@@ -123,6 +134,9 @@ while running:
         
     elif programSelection == 6: # Start list experiments
         listExperiments()
+    
+    elif programSelection == 7: # Start list experiments    
+        testCounter()
         
     else:
         print('No valid number was printed.. :-( \n')
