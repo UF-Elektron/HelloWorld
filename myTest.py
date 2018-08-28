@@ -100,6 +100,18 @@ def testCounter():
             timerTicks = 0
             print('10ms Event called')
     
+def luxInterpolation(adcValue):
+    luxLUT = [1, 3, 5, 8, 10, 12, 15, 18, 20, 25, 30, 40, 50, 80, 100, 150, 200, 300, 400, 500, 1000, 1500, 2000, 3000]  # Lux Values 
+    adcLUT = [0, 70, 102, 132, 146, 158, 172, 183, 190, 204, 216, 234, 248, 278, 292, 318, 336, 362, 380, 394, 438, 464, 482, 508]     # ADC Values
+
+    for x in range (0, len(luxLUT)):
+        if adcValue < adcLUT[x]:
+            lutPosition = x
+            break
+    tempValue = (adcValue- adcLUT[lutPosition-1]*10 / adcLUT[lutPosition] - adcLUT[lutPosition-1])
+    result = luxLUT[lutPosition-1] + (luxLUT[lutPosition] - luxLUT[lutPosition-1] * tempValue / 10)
+    print('For adcValue = %d' %adcValue, ' result = %d' %result, ' lux')
+    
 #****************************************************************************************************************
 # Start of the program:
 #****************************************************************************************************************
@@ -107,7 +119,8 @@ running = 1
 
 while running:
     print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \
-             \n[3] Print The Zen of Python \n[4] Get random number \n[5] Complex Values \n[6] Start list experiments')
+             \n[3] Print The Zen of Python \n[4] Get random number \n[5] Complex Values \n[6] Start list experiments \
+             \n[7] Counter Test \n[8] Lux Interpolation')
     programSelection = int(input('Type a number to run a program: '))
 
     if programSelection == 0:   # Exit program selection
@@ -135,8 +148,13 @@ while running:
     elif programSelection == 6: # Start list experiments
         listExperiments()
     
-    elif programSelection == 7: # Start list experiments    
+    elif programSelection == 7: # Counter Test   
         testCounter()
+     
+    elif programSelection == 8: # Lux Interpolation
+        adcTest = [10, 70, 100, 200, 380, 480, 500]
+        for x in range (0, len(adcTest)):
+            luxInterpolation(adcTest[x])
         
     else:
         print('No valid number was printed.. :-( \n')
