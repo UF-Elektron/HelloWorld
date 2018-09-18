@@ -1,18 +1,33 @@
 # DME, created 21.06.2018
 # Brief: This is my very first python program! :D
 # Python learning links:
-#         List of learning links: https://wiki.python.org/moin/BeginnersGuide/Programmers
-#         Learn python step-by-step: http://www.techbeamers.com/python-tutorial-step-by-step/
-from cmath import sqrt, cos
-from math import acos
+#        List of learning links: https://wiki.python.org/moin/BeginnersGuide/Programmers
+#        New tutorial I work with: https://docs.python.org/3/tutorial/ 
 
+#****************************************************************************************************************
+# Imports
+#****************************************************************************************************************
+# The following imports were automaticly added when I needed these functions
+from cmath import sqrt     # for calculation in kartesToPolar()
+from math import acos      # for calculation in kartesToPolar()
+
+#****************************************************************************************************************
+# My Functions
+#****************************************************************************************************************
+
+#----------------------------------------------------------------------------------------------------------------
+# Prints "The zen of python"
+#----------------------------------------------------------------------------------------------------------------
 def zenRoutine():
     # Type "import this" to print the zen of python
     print('----------------------------------------------------------------')
-    import this # This line prints "the zen of python" only the first time it is called (How can I print it again?)
-    this    # Here is the call of 'this' not needed. I wrote it to surpress the warning that 'this' was not used
+    import this  # This line prints "the zen of python" only the first time it is called (How can I print it again?)
+    this         # Here is the call of 'this' not needed. I wrote it to surpress the warning that 'this' was not used
     print('----------------------------------------------------------------')
     
+#----------------------------------------------------------------------------------------------------------------
+# Interest calculator: First experimentation with objects
+#----------------------------------------------------------------------------------------------------------------
 def interestRoutine(amount, roi, years):
     total = (amount * pow(1 + (roi/100), years))
     interest = total - amount
@@ -35,8 +50,10 @@ def interestRoutine(amount, roi, years):
     print('Also interesting is that when a new value is assigned to an object, then its ID changes (The ID is its address!)')
     print('For example, the old ID of year was: %i' %tmpID, 'and the new one is ', id(years))
 
+#----------------------------------------------------------------------------------------------------------------
+# Test the behaviour of objects
+#----------------------------------------------------------------------------------------------------------------
 def objectExperiments():
-    # Current chapter: http://www.techbeamers.com/understand-python-statement-indentation/
     print('Test different features of python objects')
     newVar = 255
     sameVar = 255
@@ -53,13 +70,22 @@ def objectExperiments():
     else:
         print('Both are equal, so they should still have the same ID. ID of pointToVar %i' %id(pointToVar), 'and ID of newVar %i' %id(newVar))
 
+#----------------------------------------------------------------------------------------------------------------
+# Print a random number between two boundaries
+#----------------------------------------------------------------------------------------------------------------
 def randomNumber():
     import random # Import of the random (library?) is needed for random.XYZ to work
     print('Calculate a random number between lower bound and upper bound')
-    lowerBound = int(input('lower bound '))
-    upperBound = int(input('upper bound '))
-    print('%i' %random.randrange(lowerBound, upperBound))
-   
+    try:
+        lowerBound = int(input('lower bound '))
+        upperBound = int(input('upper bound '))
+        print(random.randrange(lowerBound, upperBound))
+    except Exception as ex:
+        print("Exception ocurred: ", ex)
+        
+#----------------------------------------------------------------------------------------------------------------
+# Transform imaginary values from cartesian to polar form
+#----------------------------------------------------------------------------------------------------------------
 def kartesToPolar():
     print('It''s easy to work with complex numbers in Python, because there is a type that suports complex numbers!')
     complexVal = complex(input('Type real value '))
@@ -70,12 +96,42 @@ def kartesToPolar():
     winkel = acos(complexVal.real / betrag)
     print('Polar form: z = %i' %betrag, ' <%f' %winkel.real)
     
-#*****************************************************************************************************************************************************************
+#----------------------------------------------------------------------------------------------------------------
+# My first list
+#----------------------------------------------------------------------------------------------------------------
+def listExperiments():
+    numberList = [1, 2, 3]   
+    stringList = ["alpha", "beta", "gamma"]
+    combinedList = numberList + stringList  # Lists can be filled with different data types
+    print('The list ', combinedList, 'has %i' %len(combinedList), 'entries.')
+    firstLetter = [iterator[0] for iterator in stringList] # This does not work for lists containing numbers!
+    print('Print only the first letter of every entry in stringList ', firstLetter)
+
+#----------------------------------------------------------------------------------------------------------------
+# Test C-Code LUX interpolation: rewritten to python
+#----------------------------------------------------------------------------------------------------------------
+def luxInterpolation(adcValue):
+    luxLUT = [1, 3, 5, 8, 10, 12, 15, 18, 20, 25, 30, 40, 50, 80, 100, 150, 200, 300, 400, 500, 1000, 1500, 2000, 3000]  # Lux Values 
+    adcLUT = [0, 70, 102, 132, 146, 158, 172, 183, 190, 204, 216, 234, 248, 278, 292, 318, 336, 362, 380, 394, 438, 464, 482, 508]     # ADC Values
+
+    for x in range (0, len(luxLUT)):
+        if adcValue < adcLUT[x]:
+            lutPosition = x
+            break
+    tempValue = (adcValue- adcLUT[lutPosition-1]*10 / adcLUT[lutPosition] - adcLUT[lutPosition-1])
+    result = luxLUT[lutPosition-1] + (luxLUT[lutPosition] - luxLUT[lutPosition-1] * tempValue / 10)
+    print('For adcValue = %d' %adcValue, ' result = %d' %result, ' lux')
+    
+    
+#****************************************************************************************************************
 # Start of the program:
+#****************************************************************************************************************
 running = 1
 
 while running:
-    print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \n[3] Print The Zen of Python \n[4] Get random number')
+    print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \
+             \n[3] Print The Zen of Python \n[4] Get random number \n[5] Complex Values \n[6] Start list experiments \
+             \n[7] Lux Interpolation')
     programSelection = int(input('Type a number to run a program: '))
 
     if programSelection == 0:   # Exit program selection
@@ -99,6 +155,14 @@ while running:
         
     elif programSelection == 5: # Convert a complex value from cartesian to polar form
         kartesToPolar()
+        
+    elif programSelection == 6: # Start list experiments
+        listExperiments()
+     
+    elif programSelection == 7: # Lux Interpolation
+        adcTest = [10, 70, 100, 200, 380, 480, 500]
+        for x in range (0, len(adcTest)):
+            luxInterpolation(adcTest[x])
         
     else:
         print('No valid number was printed.. :-( \n')
