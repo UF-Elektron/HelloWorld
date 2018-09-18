@@ -14,13 +14,20 @@ from math import acos      # for calculation in kartesToPolar()
 #****************************************************************************************************************
 # My Functions
 #****************************************************************************************************************
+
+#----------------------------------------------------------------------------------------------------------------
+# Prints "The zen of python"
+#----------------------------------------------------------------------------------------------------------------
 def zenRoutine():
     # Type "import this" to print the zen of python
     print('----------------------------------------------------------------')
-    import this # This line prints "the zen of python" only the first time it is called (How can I print it again?)
-    this    # Here is the call of 'this' not needed. I wrote it to surpress the warning that 'this' was not used
+    import this  # This line prints "the zen of python" only the first time it is called (How can I print it again?)
+    this         # Here is the call of 'this' not needed. I wrote it to surpress the warning that 'this' was not used
     print('----------------------------------------------------------------')
     
+#----------------------------------------------------------------------------------------------------------------
+# Interest calculator: First experimentation with objects
+#----------------------------------------------------------------------------------------------------------------
 def interestRoutine(amount, roi, years):
     total = (amount * pow(1 + (roi/100), years))
     interest = total - amount
@@ -43,6 +50,9 @@ def interestRoutine(amount, roi, years):
     print('Also interesting is that when a new value is assigned to an object, then its ID changes (The ID is its address!)')
     print('For example, the old ID of year was: %i' %tmpID, 'and the new one is ', id(years))
 
+#----------------------------------------------------------------------------------------------------------------
+# Test the behaviour of objects
+#----------------------------------------------------------------------------------------------------------------
 def objectExperiments():
     print('Test different features of python objects')
     newVar = 255
@@ -60,6 +70,9 @@ def objectExperiments():
     else:
         print('Both are equal, so they should still have the same ID. ID of pointToVar %i' %id(pointToVar), 'and ID of newVar %i' %id(newVar))
 
+#----------------------------------------------------------------------------------------------------------------
+# Print a random number between two boundaries
+#----------------------------------------------------------------------------------------------------------------
 def randomNumber():
     import random # Import of the random (library?) is needed for random.XYZ to work
     print('Calculate a random number between lower bound and upper bound')
@@ -69,7 +82,10 @@ def randomNumber():
         print(random.randrange(lowerBound, upperBound))
     except Exception as ex:
         print("Exception ocurred: ", ex)
-   
+        
+#----------------------------------------------------------------------------------------------------------------
+# Transform imaginary values from cartesian to polar form
+#----------------------------------------------------------------------------------------------------------------
 def kartesToPolar():
     print('It''s easy to work with complex numbers in Python, because there is a type that suports complex numbers!')
     complexVal = complex(input('Type real value '))
@@ -80,6 +96,9 @@ def kartesToPolar():
     winkel = acos(complexVal.real / betrag)
     print('Polar form: z = %i' %betrag, ' <%f' %winkel.real)
     
+#----------------------------------------------------------------------------------------------------------------
+# My first list
+#----------------------------------------------------------------------------------------------------------------
 def listExperiments():
     numberList = [1, 2, 3]   
     stringList = ["alpha", "beta", "gamma"]
@@ -87,19 +106,10 @@ def listExperiments():
     print('The list ', combinedList, 'has %i' %len(combinedList), 'entries.')
     firstLetter = [iterator[0] for iterator in stringList] # This does not work for lists containing numbers!
     print('Print only the first letter of every entry in stringList ', firstLetter)
- 
-def testCounter():
-    timerTicks = 9
-    testCnt = 21
 
-    while testCnt > 0:
-        timerTicks += 1
-        testCnt -= 1
-        print(timerTicks)
-        if timerTicks == 10:
-            timerTicks = 0
-            print('10ms Event called')
-    
+#----------------------------------------------------------------------------------------------------------------
+# Test C-Code LUX interpolation: rewritten to python
+#----------------------------------------------------------------------------------------------------------------
 def luxInterpolation(adcValue):
     luxLUT = [1, 3, 5, 8, 10, 12, 15, 18, 20, 25, 30, 40, 50, 80, 100, 150, 200, 300, 400, 500, 1000, 1500, 2000, 3000]  # Lux Values 
     adcLUT = [0, 70, 102, 132, 146, 158, 172, 183, 190, 204, 216, 234, 248, 278, 292, 318, 336, 362, 380, 394, 438, 464, 482, 508]     # ADC Values
@@ -112,6 +122,7 @@ def luxInterpolation(adcValue):
     result = luxLUT[lutPosition-1] + (luxLUT[lutPosition] - luxLUT[lutPosition-1] * tempValue / 10)
     print('For adcValue = %d' %adcValue, ' result = %d' %result, ' lux')
     
+    
 #****************************************************************************************************************
 # Start of the program:
 #****************************************************************************************************************
@@ -120,7 +131,7 @@ running = 1
 while running:
     print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \
              \n[3] Print The Zen of Python \n[4] Get random number \n[5] Complex Values \n[6] Start list experiments \
-             \n[7] Counter Test \n[8] Lux Interpolation')
+             \n[7] Lux Interpolation')
     programSelection = int(input('Type a number to run a program: '))
 
     if programSelection == 0:   # Exit program selection
@@ -147,11 +158,8 @@ while running:
         
     elif programSelection == 6: # Start list experiments
         listExperiments()
-    
-    elif programSelection == 7: # Counter Test   
-        testCounter()
      
-    elif programSelection == 8: # Lux Interpolation
+    elif programSelection == 7: # Lux Interpolation
         adcTest = [10, 70, 100, 200, 380, 480, 500]
         for x in range (0, len(adcTest)):
             luxInterpolation(adcTest[x])
