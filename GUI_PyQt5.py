@@ -8,9 +8,18 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QIcon
-from PyQt5.Qt import center
 
-
+class NewWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+                     
+        # Set size of the window
+        self.resize(400, 150)
+        # Set position on the screen
+        self.move(400, 400)
+        self.setWindowTitle('New window')
+        self.setWindowIcon(QIcon('web.png'))
+    
 class Example(QWidget):
     
     def __init__(self):
@@ -36,6 +45,10 @@ class Example(QWidget):
         btn.resize(btn.sizeHint())
         btn.move(0, 0)  
         
+        btn2 = QPushButton("Open Window", self)
+        btn2.move(0, 50)
+        btn2.clicked.connect(self.buttonClicked)
+
         # Show the already created window now on screen
         self.show()
     
@@ -44,12 +57,15 @@ class Example(QWidget):
         reply = QMessageBox.question(self, 'Confirm closeEvent',
             "Are you sure to quit?", QMessageBox.Yes | 
             QMessageBox.No, QMessageBox.No)
-
+        
         if reply == QMessageBox.Yes:
             event.accept()
         else:
             event.ignore()
     
+    def buttonClicked(self):
+        self.dialog = NewWindow()
+        self.dialog.show()
 
 if __name__ == '__main__':
     
