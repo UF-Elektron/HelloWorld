@@ -19,9 +19,13 @@ class NewWindow(QWidget):
         self.move(400, 400)
         self.setWindowTitle('New window')
         self.setWindowIcon(QIcon('web.png'))
-    
-class Example(QWidget):
-    
+        
+    # Return current state of this window
+    def getWindowState(self):
+        print('Visibility = ', self.isVisible())
+        return self.isVisible()
+        
+class Example(QWidget):  
     def __init__(self):
         super().__init__()
         
@@ -45,10 +49,12 @@ class Example(QWidget):
         btn.resize(btn.sizeHint())
         btn.move(0, 0)  
         
-        btn2 = QPushButton("Open Window", self)
+        btn2 = QPushButton("Toggle Window", self)
         btn2.move(0, 50)
         btn2.clicked.connect(self.buttonClicked)
-
+        
+        self.dialog = NewWindow()
+        
         # Show the already created window now on screen
         self.show()
     
@@ -64,8 +70,10 @@ class Example(QWidget):
             event.ignore()
     
     def buttonClicked(self):
-        self.dialog = NewWindow()
-        self.dialog.show()
+        if self.dialog.getWindowState():
+            self.dialog.close()
+        else:
+            self.dialog.show()
 
 if __name__ == '__main__':
     
