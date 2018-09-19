@@ -5,21 +5,35 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
+from PyQt5.QtGui import QIcon
 
+
+class Example(QWidget):
+    
+    def __init__(self):
+        super().__init__()
+        
+        self.initUI()
+        
+        
+    def initUI(self):
+        # Instead of resize() and move(), setGeometry() can be used to set both
+        #self.setGeometry(300, 300, 300, 220)
+                     
+        # Set size of the window
+        self.resize(250, 150)
+        # Set position on the screen
+        self.move(300, 300)
+        self.setWindowTitle('My PyQt5 GUI')
+        self.setWindowIcon(QIcon('web.png'))
+        # Show the already created window now on screen
+        self.show()
+        
+        
 if __name__ == '__main__':
     
     # Create application object
     app = QApplication(sys.argv)
-
-    # Create widget without any parameters: a window
-    w = QWidget()
-    # Set size of the window
-    w.resize(250, 150)
-    # Set position on the screen
-    w.move(300, 300)
-    w.setWindowTitle('My PyQt5 GUI')
-    # Show the already created window now on screen
-    w.show()
-
+    ex = Example()
     # Enter the app mainloop
     sys.exit(app.exec_())
