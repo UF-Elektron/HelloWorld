@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QLCDNumber
 from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtGui import QIcon
 
 
@@ -19,12 +20,16 @@ class NewWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        label1 = QLabel('Popup Window', self)
-        label1.move(0,0) 
+        label1 = QLabel('Counter value:', self)
         self.lcd = QLCDNumber(self)
-        self.lcd.move(0,50)
         self.lcd.setSegmentStyle(QLCDNumber.Flat)
         self.lcd.display(self.myCounter)
+        
+        # Create box layout and add elements to it
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.lcd)
+        vbox.addWidget(label1)
+        self.setLayout(vbox)
         
         # Set size of the window
         self.resize(400, 150)
@@ -54,11 +59,10 @@ class Example(QWidget):
         
         self.initUI()
         
-        
     def initUI(self):
         # Instead of resize() and move(), setGeometry() can be used to set both
         #self.setGeometry(300, 300, 300, 220)
-                   
+                           
         # Set size of the window
         self.resize(250, 150)
         # Set position on the screen
@@ -70,19 +74,23 @@ class Example(QWidget):
         btn = QPushButton('Exit', self)
         btn.clicked.connect(QApplication.instance().quit)
         btn.resize(btn.sizeHint())
-        btn.move(0, 0)  
         
         btn2 = QPushButton("Toggle Window", self)
-        btn2.move(0, 50)
         btn2.clicked.connect(self.buttonClicked)
         
         plus = QPushButton("+", self)
-        plus.move(50, 0)
         plus.clicked.connect(self.add)
         
         minus = QPushButton("-", self)
-        minus.move(50, 50)
         minus.clicked.connect(self.subtract)
+        
+        # Create box layout and add elements to it
+        vbox = QVBoxLayout()
+        vbox.addWidget(plus)
+        vbox.addWidget(minus)
+        vbox.addWidget(btn2)
+        vbox.addWidget(btn)
+        self.setLayout(vbox)
         
         self.dialog = NewWindow()
         
