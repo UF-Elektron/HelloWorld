@@ -19,7 +19,28 @@ from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QSlider
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
+from PyQt5.Qt import QImage
+from PyQt5.Qt import QPixmap
+from PyQt5.Qt import QTransform
 
+class ImageWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        myLabel = QLabel(self)
+        myPixmap = QPixmap('testImage.jpg')
+        #myPixmap.transformed(myPixmap, QTransform.TxRotate)
+        #myPixmap.Qtransformed(Qt.TxRotate)
+        #QTransform.translate(10, 0)
+        
+        myLabel.setPixmap(myPixmap)
+        
+        self.resize(myPixmap.width(),myPixmap.height())
+
+        self.setWindowTitle('Image Window')
+        
+        print('Image window initialized')
+        
 class SliderWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -75,7 +96,7 @@ class CounterWindow(QWidget):
         self.move(400, 400)
         self.setWindowTitle('New window')
         self.setWindowIcon(QIcon('web.png'))
-        print('Counter window initialized.')
+        print('Counter window initialized')
         
     # Return current state of this window
     def getWindowState(self):
@@ -112,6 +133,9 @@ class MainWindow(QWidget):
         # Initialize counter window
         self.dialog = CounterWindow()
         
+        # Initialize image window
+        self.imageW = ImageWindow()
+
         # Set size of the window
         self.resize(250, 150)
         # Set window position on screen
@@ -134,6 +158,10 @@ class MainWindow(QWidget):
         btnSlider = QPushButton("Show Slider", self)
         btnSlider.clicked.connect(self.openSlider)
         
+        # Create pushbutton: show image
+        btnImage = QPushButton("Image", self)
+        btnImage.clicked.connect(self.showImage)
+        
         # Create pushbutton to increment a value
         btnPlus = QPushButton("+", self)
         btnPlus.clicked.connect(self.add)
@@ -148,6 +176,7 @@ class MainWindow(QWidget):
         vbox.addWidget(btnMinus)
         vbox.addWidget(btnSlider)
         vbox.addWidget(btnToggle)
+        vbox.addWidget(btnImage)
         vbox.addWidget(btnExit)
         self.setLayout(vbox)
         
@@ -174,7 +203,10 @@ class MainWindow(QWidget):
     
     def openSlider(self):
         self.sliderW.show()
-                    
+    
+    def showImage(self):
+        self.imageW.show()
+                      
     def add(self):
         self.dialog.add()
         
