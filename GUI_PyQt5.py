@@ -1,6 +1,12 @@
-# Getting some expirience with PyQt5
-# Example code from ZetCode Authored by Jan Bodnar (August 2017) was used
+#-----------------------------------------------------------------------------
+# Project:        Qt with Python! 
+# Description:    Getting some expirience with PyQt5
+# Author:         David Müller
+# Date:           September 2018
+#-----------------------------------------------------------------------------
+# Note: Example code from ZetCode Authored by Jan Bodnar (August 2017) was used
 # See: http://zetcode.com/gui/pyqt5/firstprograms/
+#-----------------------------------------------------------------------------
 
 import sys
 from PyQt5.QtWidgets import QApplication
@@ -18,16 +24,19 @@ class SliderWindow(QWidget):
     def __init__(self):
         super().__init__()
         
+        sliderMin = 20
+        sliderMax = 140
+                
         # Setup of slider
         slider = QSlider(Qt.Horizontal, self)
-        slider.setMinimum(20)
-        slider.setMaximum(140)
+        slider.setMinimum(sliderMin)
+        slider.setMaximum(sliderMax)
         
         # Setup of number display
         lcd = QLCDNumber()
         slider.valueChanged.connect(lcd.display)
         
-        slider.setValue(80)
+        slider.setValue((sliderMin + sliderMax) / 2)
                 
         layout = QVBoxLayout()
         layout.addWidget(lcd)
@@ -40,8 +49,9 @@ class SliderWindow(QWidget):
         self.setWindowTitle('Slider Window')
         
         self.setLayout(layout)
-        
-class NewWindow(QWidget):
+        print('Slider window initialized. Init val =', slider.value())
+         
+class CounterWindow(QWidget):
     myCounter = 0
     lcd = 0
     
@@ -55,8 +65,8 @@ class NewWindow(QWidget):
         
         # Create box layout and add elements to it
         vbox = QVBoxLayout()
-        vbox.addWidget(self.lcd)
         vbox.addWidget(label1)
+        vbox.addWidget(self.lcd)
         self.setLayout(vbox)
         
         # Set size of the window
@@ -65,6 +75,7 @@ class NewWindow(QWidget):
         self.move(400, 400)
         self.setWindowTitle('New window')
         self.setWindowIcon(QIcon('web.png'))
+        print('Counter window initialized.')
         
     # Return current state of this window
     def getWindowState(self):
@@ -83,7 +94,7 @@ class NewWindow(QWidget):
         self.lcd.display(self.myCounter)
         print(self.myCounter)
         
-class Example(QWidget):  
+class MainWindow(QWidget):  
     sliderW = 0
     
     def __init__(self):
@@ -95,45 +106,54 @@ class Example(QWidget):
         # Instead of resize() and move(), setGeometry() can be used to set both
         #self.setGeometry(300, 300, 300, 220)
                   
+        # Initialize slider window
         self.sliderW = SliderWindow()
                            
+        # Initialize counter window
+        self.dialog = CounterWindow()
+        
         # Set size of the window
         self.resize(250, 150)
-        # Set position on the screen
+        # Set window position on screen
         self.move(300, 300)
         self.setWindowTitle('My PyQt5 GUI')
         self.setWindowIcon(QIcon('web.png'))
         
+        # Create pushbuttons
+        #-------------------
         # Create pushbutton that closes the window
-        btn = QPushButton('Exit', self)
-        btn.clicked.connect(QApplication.instance().quit)
-        btn.resize(btn.sizeHint())
+        btnExit = QPushButton('Exit', self)
+        btnExit.clicked.connect(QApplication.instance().quit)
+        btnExit.resize(btnExit.sizeHint())
         
-        btn2 = QPushButton("Toggle Window", self)
-        btn2.clicked.connect(self.buttonClicked)
+        # Create pushbutton that toggles a window with a counter
+        btnToggle = QPushButton("Toggle Window", self)
+        btnToggle.clicked.connect(self.buttonClicked)
         
-        btn3 = QPushButton("Show Slider", self)
-        btn3.clicked.connect(self.openSlider)
+        # Create pushbutton that shows a window with a slider
+        btnSlider = QPushButton("Show Slider", self)
+        btnSlider.clicked.connect(self.openSlider)
         
-        plus = QPushButton("+", self)
-        plus.clicked.connect(self.add)
+        # Create pushbutton to increment a value
+        btnPlus = QPushButton("+", self)
+        btnPlus.clicked.connect(self.add)
         
-        minus = QPushButton("-", self)
-        minus.clicked.connect(self.subtract)
+        # Create pushbutton to decrement a value
+        btnMinus = QPushButton("-", self)
+        btnMinus.clicked.connect(self.subtract)
         
         # Create box layout and add elements to it
         vbox = QVBoxLayout()
-        vbox.addWidget(plus)
-        vbox.addWidget(minus)
-        vbox.addWidget(btn3)
-        vbox.addWidget(btn2)
-        vbox.addWidget(btn)
+        vbox.addWidget(btnPlus)
+        vbox.addWidget(btnMinus)
+        vbox.addWidget(btnSlider)
+        vbox.addWidget(btnToggle)
+        vbox.addWidget(btnExit)
         self.setLayout(vbox)
-        
-        self.dialog = NewWindow()
         
         # Show the already created window now on screen
         self.show()
+        print('Main window initialized')
     
     # Ask for confirmation on closeEvent (press of X in window title)
     def closeEvent(self, event):
@@ -165,6 +185,6 @@ if __name__ == '__main__':
     
     # Create application object
     app = QApplication(sys.argv)
-    ex = Example()
+    ex = MainWindow()
     # Enter the app mainloop
     sys.exit(app.exec_())
