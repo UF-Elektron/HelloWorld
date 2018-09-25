@@ -26,76 +26,69 @@ class ImageWindow(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.setWindowTitle('Image Window')
+
+        # Create label and add pixmap to it
         self.myLabel = QLabel(self)
         myPixmap = QPixmap('testImage.png')
+        self.myLabel.setPixmap(myPixmap)
         
+        # Create pushbuttons
+        #-------------------
+        # Create pushbutton to rotate image left
         btnRotateL = QPushButton('Rotate 90° left', self)
         btnRotateL.clicked.connect(self.rotateL)
         
+        # Create pushbutton to rotate image left
         btnRotateR = QPushButton('Rotate 90° right', self)
         btnRotateR.clicked.connect(self.rotateR)
         
+        # Create pushbutton to mirror image hirizontally
         btnMirror = QPushButton('Mirror horizontally', self)
         btnMirror.clicked.connect(self.mirror)
-        
-        self.myLabel.setPixmap(myPixmap)
                 
         # Create box layout and add elements to it
         vbox = QVBoxLayout()
         vbox.addWidget(btnRotateL)
         vbox.addWidget(btnRotateR)
         vbox.addWidget(btnMirror)
-        
         vbox.addWidget(self.myLabel)
         self.setLayout(vbox)
         
+        # Set window size to match size of pixmap
         self.resize(myPixmap.width(),myPixmap.height())
 
-        self.setWindowTitle('Image Window')
-        
         print('Image window initialized')
 
     def rotateL(self):
-        print('Rotate left function')
-        
         # Load image for QImageWriter
         self.myImg = QImageWriter('testImage.png')
         # Rotate image with QImageWriter transformation function
         self.myImg.setTransformation(QImageIOHandler.TransformationRotate270)
-        
-        newImage = QImage('testImage.png')
-        print('Write image: ', self.myImg.write(newImage))
-        
+               
         self.updateImage()
     
     def rotateR(self):
-        print('Rotate right function')
-        
         # Load image for QImageWriter
         self.myImg = QImageWriter('testImage.png')
         # Rotate image with QImageWriter transformation function
         self.myImg.setTransformation(QImageIOHandler.TransformationRotate90)
         
-        newImage = QImage('testImage.png')
-        print('Write image: ', self.myImg.write(newImage))
-        
         self.updateImage()
 
     def mirror(self):
-        print('Mirror function')
-        
         # Load image for QImageWriter
         self.myImg = QImageWriter('testImage.png')
         # Rotate image with QImageWriter transformation function
         self.myImg.setTransformation(QImageIOHandler.TransformationMirror)
         
-        newImage = QImage('testImage.png')
-        print('Write image: ', self.myImg.write(newImage))
-        
         self.updateImage()
-        
-        
+          
     def updateImage(self):
+        newImage = QImage('testImage.png')
+        errorValue = self.myImg.write(newImage)
+        if errorValue == 0:
+            print('Error, image was not saved!') 
         myPixmap = QPixmap('testImage.png')
         self.myLabel.setPixmap(myPixmap)
         
