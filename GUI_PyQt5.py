@@ -21,7 +21,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.Qt import QImage, QImageWriter, QImageIOHandler
 from PyQt5.Qt import QPixmap
-from PyQt5.Qt import QTransform
 
 class ImageWindow(QWidget):
     def __init__(self):
@@ -36,12 +35,17 @@ class ImageWindow(QWidget):
         btnRotateR = QPushButton('Rotate 90° right', self)
         btnRotateR.clicked.connect(self.rotateR)
         
+        btnMirror = QPushButton('Mirror horizontally', self)
+        btnMirror.clicked.connect(self.mirror)
+        
         self.myLabel.setPixmap(myPixmap)
                 
         # Create box layout and add elements to it
         vbox = QVBoxLayout()
         vbox.addWidget(btnRotateL)
         vbox.addWidget(btnRotateR)
+        vbox.addWidget(btnMirror)
+        
         vbox.addWidget(self.myLabel)
         self.setLayout(vbox)
         
@@ -76,6 +80,20 @@ class ImageWindow(QWidget):
         print('Write image: ', self.myImg.write(newImage))
         
         self.updateImage()
+
+    def mirror(self):
+        print('Mirror function')
+        
+        # Load image for QImageWriter
+        self.myImg = QImageWriter('testImage.png')
+        # Rotate image with QImageWriter transformation function
+        self.myImg.setTransformation(QImageIOHandler.TransformationMirror)
+        
+        newImage = QImage('testImage.png')
+        print('Write image: ', self.myImg.write(newImage))
+        
+        self.updateImage()
+        
         
     def updateImage(self):
         myPixmap = QPixmap('testImage.png')
