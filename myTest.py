@@ -16,6 +16,19 @@ from math import acos      # for calculation in kartesToPolar()
 #****************************************************************************************************************
 
 #----------------------------------------------------------------------------------------------------------------
+# Enocde/Decode a word
+#----------------------------------------------------------------------------------------------------------------
+def encodeText(inputText, key):
+    for i in range (0, len(inputText)):
+        encoded = ord(inputText[i]) - key
+        print(chr(encoded))
+        
+def decodeText(inputText, key):
+    for i in range (0, len(inputText)):
+        decoded = ord(inputText[i]) + key
+        print(chr(decoded))
+        
+#----------------------------------------------------------------------------------------------------------------
 # Prints "The zen of python"
 #----------------------------------------------------------------------------------------------------------------
 def zenRoutine():
@@ -131,7 +144,7 @@ running = 1
 while running:
     print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \
              \n[3] Print The Zen of Python \n[4] Get random number \n[5] Complex Values \n[6] Start list experiments \
-             \n[7] Lux Interpolation')
+             \n[7] Lux Interpolation \n[8] ASCII encode/decode')
     programSelection = int(input('Type a number to run a program: '))
 
     if programSelection == 0:   # Exit program selection
@@ -139,9 +152,9 @@ while running:
         
     elif programSelection == 1: # Start interest calculator (with input and output)
         print('Interest Calculator:')
-        amount = float(input('Principal amount ?'))
-        roi = float(input('Rate of Interest ?'))
-        years = int(input('Duration (no. of years) ?'))
+        amount = float(input('Principal amount? '))
+        roi = float(input('Rate of Interest? '))
+        years = int(input('Duration (no. of years)? '))
         interestRoutine(amount, roi, years)
     
     elif programSelection == 2: # Start object experiments
@@ -163,9 +176,19 @@ while running:
         adcTest = [10, 70, 100, 200, 380, 480, 500]
         for x in range (0, len(adcTest)):
             luxInterpolation(adcTest[x])
+            
+    elif programSelection == 8: # ASCII decode / encode
+        inputText = str(input('Word to encode: '))
+        inputKey = int(input('Key: '))
+        selection = int(input('1: Encode, 2: Decode: '))
         
+        if selection == 1:
+            encodeText(inputText, inputKey) 
+        elif selection == 2:
+            decodeText(inputText, inputKey)
+        else:
+            print('Wrong input')    
     else:
         print('No valid number was printed.. :-( \n')
     
 print('\n----End of program----')
-
