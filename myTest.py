@@ -16,6 +16,40 @@ from math import acos      # for calculation in kartesToPolar()
 #****************************************************************************************************************
 
 #----------------------------------------------------------------------------------------------------------------
+# Guess a number
+#----------------------------------------------------------------------------------------------------------------
+def guess():
+    import random
+    correct = False
+    guessCount = 0
+    
+    # Create random number
+    result = random.randrange(0, 100)
+    # Expansion for additional feature: Guess a random capital letter
+    # A random number in ASCII range for capital letters: result = random.randrange(65, 91)
+    # Rewrite input to a number with ord() and output number to a character with chr()
+    print('Guess a number between 0 and 100')
+
+    while(correct == False):
+        myGuess = int(input('Your guess: '))
+        
+        # Check if guess is in range
+        if(myGuess >= 0 and myGuess <= 100):
+            guessCount += 1     # Short for guessCount = guessCount +1
+            
+            # Guessed number too large, too small or correct?
+            if(myGuess > result):
+                print('Number too large')
+            elif(myGuess < result):
+                print('Number too small')
+            else:
+                correct = True
+                print('Result found. Number of guesses: ', guessCount)
+                print('---------------------------\n')
+        else:
+            print('Number outside of range!')
+            
+#----------------------------------------------------------------------------------------------------------------
 # Enocde/Decode a word
 #----------------------------------------------------------------------------------------------------------------
 def encodeText(inputText, key):
@@ -144,7 +178,7 @@ running = 1
 while running:
     print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \
              \n[3] Print The Zen of Python \n[4] Get random number \n[5] Complex Values \n[6] Start list experiments \
-             \n[7] Lux Interpolation \n[8] ASCII encode/decode')
+             \n[7] Lux Interpolation \n[8] ASCII encode/decode \n[9] Guess a Number')
     programSelection = int(input('Type a number to run a program: '))
 
     if programSelection == 0:   # Exit program selection
@@ -187,7 +221,11 @@ while running:
         elif selection == 2:
             decodeText(inputText, inputKey)
         else:
-            print('Wrong input')    
+            print('Wrong input')
+            
+    elif programSelection == 9: # Guess a number
+        guess()
+        
     else:
         print('No valid number was printed.. :-( \n')
     
