@@ -19,10 +19,10 @@ from math import acos      # for calculation in kartesToPolar()
 # Transform a String to ASCII Values (Decimal and Hexadecimal)
 #----------------------------------------------------------------------------------------------------------------
 def transf(inputText):
-    for i in range (0, len(inputText)):
-        encoded = ord(inputText[i])
+    for i in inputText:
+        encoded = ord(i)
         print(encoded, hex(encoded))   
-        
+    
 #----------------------------------------------------------------------------------------------------------------
 # Guess a number
 #----------------------------------------------------------------------------------------------------------------
@@ -186,7 +186,7 @@ running = 1
 while running:
     print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \
              \n[3] Print The Zen of Python \n[4] Get random number \n[5] Complex Values \n[6] Start list experiments \
-             \n[7] Lux Interpolation \n[8] ASCII encode/decode \n[9] Guess a Number')
+             \n[7] Lux Interpolation \n[8] ASCII encode/decode \n[9] Guess a Number \n[10] Transform string to ASCII')
     programSelection = int(input('Type a number to run a program: '))
 
     if programSelection == 0:   # Exit program selection
@@ -233,6 +233,9 @@ while running:
             
     elif programSelection == 9: # Guess a number
         guess()
+    
+    elif programSelection == 10:
+        transf(input('Input String: '))
         
     else:
         print('No valid number was printed.. :-( \n')
