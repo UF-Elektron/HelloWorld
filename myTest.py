@@ -19,8 +19,8 @@ from math import acos      # for calculation in kartesToPolar()
 # Transform a String to ASCII Values (Decimal and Hexadecimal)
 #----------------------------------------------------------------------------------------------------------------
 def transf(inputText):
-    for i in inputText:
-        encoded = ord(i)
+    for char in inputText:
+        encoded = ord(char)
         print(encoded, hex(encoded))   
     
 #----------------------------------------------------------------------------------------------------------------
@@ -58,18 +58,13 @@ def guess():
             print('Number outside of range!')
             
 #----------------------------------------------------------------------------------------------------------------
-# Enocde/Decode a word
+# Enocde/Decode a word. Retriev the encoded data with the same key *(-1)
 #----------------------------------------------------------------------------------------------------------------
 def encodeText(inputText, key):
-    for i in range (0, len(inputText)):
-        encoded = ord(inputText[i]) - key
+    for char in inputText:
+        encoded = ord(char) - key
         print(chr(encoded))
-        
-def decodeText(inputText, key):
-    for i in range (0, len(inputText)):
-        decoded = ord(inputText[i]) + key
-        print(chr(decoded))
-        
+
 #----------------------------------------------------------------------------------------------------------------
 # Prints "The zen of python"
 #----------------------------------------------------------------------------------------------------------------
@@ -169,12 +164,12 @@ def luxInterpolation(adcValue):
     luxLUT = [1, 3, 5, 8, 10, 12, 15, 18, 20, 25, 30, 40, 50, 80, 100, 150, 200, 300, 400, 500, 1000, 1500, 2000, 3000]  # Lux Values 
     adcLUT = [0, 70, 102, 132, 146, 158, 172, 183, 190, 204, 216, 234, 248, 278, 292, 318, 336, 362, 380, 394, 438, 464, 482, 508]     # ADC Values
 
-    for x in range (0, len(luxLUT)):
-        if adcValue < adcLUT[x]:
-            lutPosition = x
+    for lutPosition, element in enumerate(luxLUT):
+        if adcValue < adcLUT[lutPosition]:
+            tempValue = (adcValue- adcLUT[lutPosition-1]*10 / adcLUT[lutPosition] - adcLUT[lutPosition-1])
+            result = luxLUT[lutPosition-1] + (element - luxLUT[lutPosition-1] * tempValue / 10)
             break
-    tempValue = (adcValue- adcLUT[lutPosition-1]*10 / adcLUT[lutPosition] - adcLUT[lutPosition-1])
-    result = luxLUT[lutPosition-1] + (luxLUT[lutPosition] - luxLUT[lutPosition-1] * tempValue / 10)
+
     print('For adcValue = %d' %adcValue, ' result = %d' %result, ' lux')
     
     
@@ -216,20 +211,13 @@ while running:
      
     elif programSelection == 7: # Lux Interpolation
         adcTest = [10, 70, 100, 200, 380, 480, 500]
-        for x in range (0, len(adcTest)):
-            luxInterpolation(adcTest[x])
+        for value in adcTest:
+            luxInterpolation(value)
             
     elif programSelection == 8: # ASCII decode / encode
         inputText = str(input('Word to encode: '))
         inputKey = int(input('Key: '))
-        selection = int(input('1: Encode, 2: Decode: '))
-        
-        if selection == 1:
-            encodeText(inputText, inputKey) 
-        elif selection == 2:
-            decodeText(inputText, inputKey)
-        else:
-            print('Wrong input')
+        encodeText(inputText, inputKey)
             
     elif programSelection == 9: # Guess a number
         guess()
