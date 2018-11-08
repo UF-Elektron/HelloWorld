@@ -26,10 +26,10 @@ def rabbitKangaroo():
     kangarooCapacity = 10   # Capacity of Kangaroos (max Population)
     rabbitVelocity = 0.5    # Rate of population growth
     kangarooVelocity = 0.1  # Rate of population growth
-    foodNeed = 5             # Difference of food needed. Kangaroos need 5 times as much as rabbits
+    foodNeed = 5            # Difference of food needed. Kangaroos need 5 times as much as rabbits
     steps = 20              # Simulation Steps
     
-    time = [x for x in range (0, 20)]
+    time = [x for x in range (0, steps)]
     rabbits = [0] * steps
     rabbits[0] = 2
     kangaroos = [0] * steps
