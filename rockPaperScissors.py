@@ -18,8 +18,8 @@ import random
 # Global Variables
 #------------------------------------------------------------
 opponentsLastPlay = random.randrange(0, 3)
-playStyle = 1
-style = 1 #random.randrange(0,2)
+strategy = 1    # 0: random, 1: strategy
+stratStyle = 0  # 0: opponent picks last symbol of player, 1: opponent switches symbol after a lose
 
 #------------------------------------------------------------
 # My Functions
@@ -38,25 +38,22 @@ def parseToString(plays):
     print(outputString)
     
 # Generate plays for opponent (either by random, or with a strategy)
-def opponentTurns(lost):
+def opponentTurns(lost, playerLastPlay):
     play = 0
-    # Select strategi for opponent
-    if (playStyle == 0):
+    # Select strategy for opponent
+    if (strategy == 0):
         # Roll a random value: 0, 1 or 2
         play = random.randrange(0, 3)
     else:
-        if (style == 1):
+        if (stratStyle == 1):
             global opponentsLastPlay
-            print(opponentsLastPlay)
             play = opponentsLastPlay
             if (lost == 1):
-                print('Bot Lost, change symbol')
                 play = random.randrange(0, 3)
                 while (play == opponentsLastPlay):
                     play = random.randrange(0, 3)
                 opponentsLastPlay = play
         else:
-            playerLastPlay = 0
             play = playerLastPlay
     return play
 
@@ -86,7 +83,7 @@ def startGame(turns):
     outcome = [0] * turns
     myPlays = [0] * turns
     otherPlays = [0] * turns
-    otherPlays[0] = opponentTurns(0)
+    otherPlays[0] = opponentTurns(0, 0)
     
     for x in range (0, turns):
         myPlays[x] = myTurn()
@@ -113,7 +110,7 @@ def startGame(turns):
         
         # Calculate opponents next turn
         if (x+1 < turns):
-            otherPlays[x+1] = opponentTurns(outcome[x])
+            otherPlays[x+1] = opponentTurns(outcome[x], myPlays[x])
             
     parseToString(myPlays)
     parseToString(otherPlays)
