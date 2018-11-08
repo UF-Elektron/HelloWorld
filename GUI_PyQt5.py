@@ -19,9 +19,34 @@ from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QSlider
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
-from PyQt5.Qt import QImage, QImageWriter, QImageIOHandler
+from PyQt5.Qt import QImage, QImageWriter, QImageIOHandler, QFileDialog
 from PyQt5.Qt import QPixmap
 
+class ShowOpenedImage(QWidget):
+    def __init__(self):
+        super().__init__()
+                
+        # Set window position on screen
+        self.move(150, 300)
+        self.setWindowTitle('Image View')
+        self.setWindowIcon(QIcon('web.png'))
+        
+    def showImage(self, aString = 0):   
+        # Create label and add pixmap to it
+        self.myLabel = QLabel(self)
+        myPixmap = QPixmap(aString)
+        self.myLabel.setPixmap(myPixmap)
+        
+        # Create box layout and add elements to it
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.myLabel)
+        self.setLayout(vbox)
+        
+        # Set window size to match size of pixmap
+        self.resize(myPixmap.width(), myPixmap.height())
+        
+        self.show()
+        
 class ImageWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -221,6 +246,10 @@ class MainWindow(QWidget):
         btnMinus = QPushButton("-", self)
         btnMinus.clicked.connect(self.subtract)
         
+        # Create pushbutton to open file
+        btnOpenFile = QPushButton("Open File", self)
+        btnOpenFile.clicked.connect(self.openFile)
+
         # Create box layout and add elements to it
         vbox = QVBoxLayout()
         vbox.addWidget(btnPlus)
@@ -228,6 +257,7 @@ class MainWindow(QWidget):
         vbox.addWidget(btnSlider)
         vbox.addWidget(btnToggle)
         vbox.addWidget(btnImage)
+        vbox.addWidget(btnOpenFile)
         vbox.addWidget(btnExit)
         self.setLayout(vbox)
         
@@ -263,6 +293,14 @@ class MainWindow(QWidget):
         
     def subtract(self):
         self.dialog.subtract()
+    
+    def openFile(self):
+        # Initialize window to show opened image
+        self.newW = ShowOpenedImage()
+        fileDialog = QFileDialog()
+        fName = fileDialog.getOpenFileName(self, 'Open Image', '/', 'Image Files (*.png *.jpg *.bmp)');
+        print('Opened file %s' %fName[0])
+        self.newW.showImage(fName[0])
         
 if __name__ == '__main__':
     
