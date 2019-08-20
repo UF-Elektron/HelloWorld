@@ -18,11 +18,29 @@ from math import acos      # for calculation in kartesToPolar()
 #----------------------------------------------------------------------------------------------------------------
 # Transform a String to ASCII Values (Decimal and Hexadecimal)
 #----------------------------------------------------------------------------------------------------------------
-def transf(inputText):
+def stringToHex(inputText):
     for char in inputText:
         encoded = ord(char)
         print(encoded, hex(encoded))   
     
+#----------------------------------------------------------------------------------------------------------------
+# Transform Hex to ASCII characters 
+#----------------------------------------------------------------------------------------------------------------
+def hexToAscii(inputText):
+    count = 0
+    hexInt = int(inputText, 16)
+    i = hexInt
+    
+    while (i > 0):
+        i = i >> 8
+        count = count + 1
+        
+    string = hexInt.to_bytes(count + 1, "big")
+    tmp =(str(string)).rsplit("b'\\x00")
+    tmp = tmp[1].rsplit("'")
+    string = tmp[0]
+    print(string)
+        
 #----------------------------------------------------------------------------------------------------------------
 # Guess a number
 #----------------------------------------------------------------------------------------------------------------
@@ -181,7 +199,8 @@ running = 1
 while running:
     print('What do you want to do? \n[0] Exit Program selection \n[1] Start Interest Calculator \n[2] Object experiments \
              \n[3] Print The Zen of Python \n[4] Get random number \n[5] Complex Values \n[6] Start list experiments \
-             \n[7] Lux Interpolation \n[8] ASCII encode/decode \n[9] Guess a Number \n[10] Transform string to ASCII')
+             \n[7] Lux Interpolation \n[8] ASCII encode/decode \n[9] Guess a Number \n[10] Transform string to ASCII \
+             \n[11] Transform Hex to String')
     programSelection = int(input('Type a number to run a program: '))
 
     if programSelection == 0:   # Exit program selection
@@ -223,7 +242,10 @@ while running:
         guess()
     
     elif programSelection == 10:
-        transf(input('Input String: '))
+        stringToHex(input('Input String: '))
+        
+    elif programSelection == 11:
+        hexToAscii(input('Input ASCII code (0x???): '))
         
     else:
         print('No valid number was printed.. :-( \n')
